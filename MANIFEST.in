@@ -1,0 +1,2 @@
+include versioneer.py
+include kinderstadt_passgen/_version.py
