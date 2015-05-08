@@ -1,0 +1,9 @@
+---
+dependencies:
+  - role: ANXS.postgresql
+    postgresql_pg_hba_default:
+      - { type: local, database: all, user: '{{ postgresql_admin_user }}', address: '', method: '{{ postgresql_default_auth_method }}', comment: '' }
+      - { type: local, database: all, user: all, address: '', method: '{{ postgresql_default_auth_method }}', comment: '"local" is for Unix domain socket connections only' }
+      - { type: host,  database: all, user: all, address: all, method: '{{ postgresql_default_auth_method }}', comment: 'IPv4 local connections:' }
+    postgresql_listen_addresses:
+      - '*'

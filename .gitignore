@@ -1,4 +1,5 @@
 /*.egg
 /*.egg-info
+/ansible/lib
 /build
 /dist

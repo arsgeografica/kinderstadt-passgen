@@ -1,0 +1,15 @@
+---
+- name: Install RabbitMQ server
+  apt:
+    name: rabbitmq-server
+
+# @TODO: Create user
+
+- name: Install RabbitMQ management plugin
+  rabbitmq_plugin:
+    names: rabbitmq_management
+
+- name: Restart RabbitMQ to launch management plugin
+  service:
+    name: rabbitmq-server
+    state: restarted

@@ -1,0 +1,16 @@
+---
+- name: Get base system up to date
+  apt:
+    upgrade: dist
+    update_cache: true
+    cache_valid_time: 1800
+
+- name: Install base packages
+  apt:
+    name: '{{ item }}'
+  with_items:
+    - git
+    - mc
+    - htop
+    - zsh
+    - vim

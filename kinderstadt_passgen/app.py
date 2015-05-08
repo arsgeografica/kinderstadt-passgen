@@ -13,9 +13,6 @@ def factory(config=None):
     db.init_app(app)
     celery.init_app(app)
 
-    from pprint import pprint
-    pprint(celery.conf)
-
     app.add_url_rule('/', 'home', views.home)
     app.add_url_rule('/order', 'order_create', views.order, methods=('POST',))
     app.add_url_rule('/order/<id>', 'order', views.order)
