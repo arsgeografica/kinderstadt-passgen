@@ -47,6 +47,7 @@ setup(
         'Flask-Migrate==1.4.0',
         'Flask-SQLAlchemy==2.0',
         'Flask==0.10.1',
+        'pgcli==0.16.3'
     ],
     extras_require={
         'devel': [
@@ -54,7 +55,6 @@ setup(
             'autopep8',
             'flake8',
             'ipython',
-            'pgcli',
         ]
     },
     tests_require=[

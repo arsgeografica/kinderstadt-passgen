@@ -3,6 +3,7 @@ import click
 from kinderstadt_passgen.app import factory
 from kinderstadt_passgen.tasks import celery
 from flask.ext import migrate as migrate_extension
+from pgcli.main import PGCli
 
 
 @click.group()
@@ -43,6 +44,19 @@ def worker(ctx):
 @click.pass_context
 def db(ctx):
     pass
+
+
+@db.command()
+@click.pass_context
+def shell(ctx):
+    """Run database shell"""
+    app = factory(ctx.obj['CONFIG'])
+    with app.app_context():
+        pgcli = PGCli()
+        database = str(app.extensions['sqlalchemy'].db.engine.url)
+        pgcli.connect_uri(database)
+        pgcli.logger.debug('Launch Params: \n\tdatabase: %r', database)
+        pgcli.run_cli()
 
 
 @db.command()
