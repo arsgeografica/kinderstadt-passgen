@@ -44,6 +44,7 @@ setup(
         'BaseHash==2.1.0',
         'click==4.0',
         'Flask-Celery-Helper==1.1.0',
+        'Flask-Migrate==1.4.0',
         'Flask-SQLAlchemy==2.0',
         'Flask==0.10.1',
     ],

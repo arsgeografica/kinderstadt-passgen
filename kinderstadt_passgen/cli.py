@@ -2,6 +2,7 @@ from celery.bin.celery import main as celery_main
 import click
 from kinderstadt_passgen.app import factory
 from kinderstadt_passgen.tasks import celery
+from flask.ext import migrate as migrate_extension
 
 
 @click.group()
@@ -36,6 +37,119 @@ def worker(ctx):
     celery_args = ['celery', 'worker']
     with app.app_context():
         return celery_main(celery_args)
+
+
+@cli.group()
+@click.pass_context
+def db(ctx):
+    pass
+
+
+@db.command()
+@click.pass_context
+def init(ctx):
+    """Init migrations system"""
+    app = factory(ctx.obj['CONFIG'])
+    with app.app_context():
+        print(app.extensions['migrate'].directory)
+        migrate_extension.init()
+
+
+@db.command()
+@click.pass_context
+@click.option('--rev-id', default=None, help='Specify a hardcoded revision '
+              'id instead of generating one')
+@click.option('--version-path', default=None, help='Specify specific path '
+              'from config for version file')
+@click.option('--branch-label', default=None, help='Specify a branch label '
+              'to apply to the new revision')
+@click.option('--splice', is_flag=True, default=False, help='Allow a non-head '
+              'revision as the "head" to splice onto')
+@click.option('--head', default='head', help='Specify head revision or '
+              '<branchname>@head to base new revision on')
+@click.option('--sql', is_flag=True, default=False, help="Don't emit SQL to "
+              "database - dump to standard output instead")
+@click.option('--autogenerate/--no-autogenerate', default=True,
+              help='Populate revision script with andidate migration '
+              'operatons, based on comparison of database to model')
+@click.option('-m', '--message', default=None)
+def revision(ctx, rev_id, version_path, branch_label, splice, head, sql,
+             autogenerate, message):
+    """Create database revision"""
+    app = factory(ctx.obj['CONFIG'])
+    with app.app_context():
+        migrate_extension.revision(
+            message=message,
+            autogenerate=autogenerate,
+            sql=sql,
+            head=head,
+            splice=splice,
+            branch_label=branch_label,
+            version_path=version_path,
+            rev_id=rev_id
+        )
+
+
+@db.command()
+@click.pass_context
+@click.option('--rev-id', default=None, help='Specify a hardcoded revision id '
+              'instead of generating one')
+@click.option('--version-path', default=None, help='Specify specific path '
+              'from config for version file')
+@click.option('--branch-label', default=None, help='Specify a branch label to '
+              'apply to the new revision')
+@click.option('--splice', is_flag=True, default=False, help='Allow a non-head '
+              'revision as the "head" to splice onto')
+@click.option('--head', default='head', help='Specify head revision or '
+              '<branchname>@head to base new revision on')
+@click.option('--sql', is_flag=True, default=False, help="Don't emit SQL to "
+              "database - dump to standard output instead")
+@click.option('-m', '--message', default=None)
+def migrate(ctx, rev_id, version_path, branch_label, splice, head, sql,
+            message):
+    app = factory(ctx.obj['CONFIG'])
+    with app.app_context():
+        migrate_extension.migrate(
+            message=message,
+            sql=sql,
+            head=head,
+            splice=splice,
+            branch_label=branch_label,
+            version_path=version_path,
+            rev_id=rev_id)
+
+
+@db.command()
+@click.pass_context
+@click.option('--tag', default=None, help="Arbitrary 'tag' name - can be "
+              "used by custom env.py scripts")
+@click.option('--sql', is_flag=True, default=False, help="Don't emit SQL to "
+              "database - dump to standard output instead")
+@click.argument('revision', nargs=-1)
+def upgrade(ctx, tag, sql, revision):
+    """Upgrade database"""
+    if not len(revision):
+        revision = ('head',)
+
+    app = factory(ctx.obj['CONFIG'])
+    with app.app_context():
+        migrate_extension.upgrade(revision=revision, sql=sql, tag=tag)
+
+
+@db.command()
+@click.pass_context
+@click.option('--tag', default=None, help="Arbitrary 'tag' name - can be "
+              "used by custom env.py scripts")
+@click.option('--sql', is_flag=True, default=False, help="Don't emit SQL to "
+              "database - dump to standard output instead")
+@click.argument('revision', nargs=-1)
+def downgrade(ctx, tag, sql, revision):
+    """Downgrade database"""
+    if not len(revision):
+        revision = '-1'
+    app = factory(ctx.obj['CONFIG'])
+    with app.app_context():
+        migrate_extension.downgrade(revision=revision, sql=sql, tag=tag)
 
 
 def main():

@@ -1,5 +1,6 @@
+import os.path
 from flask import Flask
-from kinderstadt_passgen.models import db
+from kinderstadt_passgen.models import db, migrate
 from kinderstadt_passgen import views
 from kinderstadt_passgen.tasks import celery
 
@@ -11,6 +12,9 @@ def factory(config=None):
         app.config.from_object(config)
 
     db.init_app(app)
+    migrations_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                  'migrations')
+    migrate.init_app(app, db, directory=migrations_dir)
     celery.init_app(app)
 
     app.add_url_rule('/', 'home', views.home)
