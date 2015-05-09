@@ -1,7 +1,6 @@
 from celery.bin.celery import main as celery_main
 import click
 from kinderstadt_passgen.app import factory
-from kinderstadt_passgen.tasks import celery
 from flask.ext import migrate as migrate_extension
 from pgcli.main import PGCli
 
