@@ -1,12 +1,7 @@
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.migrate import Migrate
 from sqlalchemy.types import DateTime, Integer
 from sqlalchemy.schema import Column
 from datetime import datetime
-
-
-db = SQLAlchemy()
-migrate = Migrate()
+from kinderstadt_passgen.extensions import db
 
 
 class Order(db.Model):

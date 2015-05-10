@@ -1,8 +1,9 @@
 import basehash
 from flask import abort, current_app as app, render_template, redirect, \
     request, url_for
-from kinderstadt_passgen.models import Order, db
-from kinderstadt_passgen.task import execute_order
+from kinderstadt_passgen.extensions import db
+from kinderstadt_passgen.models import Order
+from kinderstadt_passgen.tasks import execute_order
 
 
 base62 = basehash.base62()

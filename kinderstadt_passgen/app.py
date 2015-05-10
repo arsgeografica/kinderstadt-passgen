@@ -1,8 +1,7 @@
 import os.path
 from flask import Flask
-from kinderstadt_passgen.models import db, migrate
+from kinderstadt_passgen.extensions import db, celery, migrate
 from kinderstadt_passgen import views
-from kinderstadt_passgen.tasks import celery
 
 
 def factory(config=None):
