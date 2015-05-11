@@ -1,12 +1,8 @@
-import basehash
 from flask import abort, current_app as app, render_template, redirect, \
     request, url_for
 from kinderstadt_passgen.extensions import db
 from kinderstadt_passgen.models import Order
 from kinderstadt_passgen.tasks import execute_order
-
-
-base62 = basehash.base62()
 
 
 def home():
@@ -15,18 +11,17 @@ def home():
     return 'HOME'
 
 
-def order(id=None):
+def order(base62_id=None):
     """Route where the user is redirected to. Creates an order and displays
     order status"""
 
-    if id is None:
+    if base62_id is None:
         if 'POST' == request.method:
             order = Order.create()
             try:
                 execute_order.apply_async([order.id])
 
-                id = base62.encode(order.id + app.config['ID_ENCODE_OFFSET'])
-                return redirect(url_for('order', id=id))
+                return redirect(url_for('order', base62_id=order.base62_id))
             except Exception, e:
                 # TODO: Logging
                 db.session.delete(order)
@@ -36,7 +31,8 @@ def order(id=None):
         else:
             abort(400)
     else:
-        return render_template('order.html', id=id)
+        order = Order.get_by_base62_id(base62_id)
+        return render_template('order.html', order=order)
 
 
 def download(id):

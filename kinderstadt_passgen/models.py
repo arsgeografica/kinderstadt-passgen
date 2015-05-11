@@ -1,7 +1,13 @@
+import basehash
+from flask import current_app as app
+from path import Path
 from sqlalchemy.types import DateTime, Integer
 from sqlalchemy.schema import Column
 from datetime import datetime
 from kinderstadt_passgen.extensions import db
+
+
+_base62 = basehash.base62()
 
 
 class Order(db.Model):
@@ -36,3 +42,20 @@ class Order(db.Model):
         db.session.commit()
 
         return order
+
+    @property
+    def base62_id(self):
+        return _base62.encode(self.id + app.config['ID_ENCODE_OFFSET'])
+
+    @classmethod
+    def get_by_base62_id(cls, base62_id):
+        id = _base62.decode(base62_id) - app.config['ID_ENCODE_OFFSET']
+        return cls.query.get_or_404(id)
+
+    @property
+    def storage_path(self):
+        out_base = Path(app.config['FILE_STORAGE_PATH'])
+        out_path = out_base / str(100*(int((self.id - 1)/100)+1))
+        out_file = 'passes_%s.pdf' % self.base62_id
+
+        return out_path / out_file

@@ -18,7 +18,7 @@ def factory(config=None):
 
     app.add_url_rule('/', 'home', views.home)
     app.add_url_rule('/order', 'order_create', views.order, methods=('POST',))
-    app.add_url_rule('/order/<id>', 'order', views.order)
-    app.add_url_rule('/order/<id>/download', 'download', views.download)
+    app.add_url_rule('/order/<base62_id>', 'order', views.order)
+    app.add_url_rule('/order/<base62_id>/download', 'download', views.download)
 
     return app
