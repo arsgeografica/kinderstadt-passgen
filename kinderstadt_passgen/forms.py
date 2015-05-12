@@ -1,0 +1,17 @@
+# -*- coding: utf-8 -*-
+from flask import current_app as app
+from flask.ext.wtf import Form
+from wtforms import IntegerField
+from wtforms.validators import DataRequired, NumberRange
+
+
+class OrderForm(Form):
+    range_size = IntegerField(default=8, validators=[DataRequired()])
+
+    def __init__(self, *args, **kwargs):
+        max_val = app.config['RANGE_SIZE_MAX']
+        msg = u'Sie können maximal %d Pässe auf einmal anfordern.' % max_val
+        range_validator = NumberRange(min=1, max=max_val, message=msg)
+        self.range_size.kwargs['validators'].append(range_validator)
+
+        super(OrderForm, self).__init__(*args, **kwargs)

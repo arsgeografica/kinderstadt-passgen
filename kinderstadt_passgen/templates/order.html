@@ -2,4 +2,8 @@
 
 {% block body %}
 <h1>Passwarteschlange {{ base62_id }}</h1>
+
+{% if order.finished %}
+<a href="{{ url_for('download', base62_id=order.base62_id) }}">Download</a>
+{% endif %}
 {% endblock %}

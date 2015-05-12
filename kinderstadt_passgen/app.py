@@ -17,7 +17,8 @@ def factory(config=None):
     celery.init_app(app)
 
     app.add_url_rule('/', 'home', views.home)
-    app.add_url_rule('/order', 'order_create', views.order, methods=('POST',))
+    app.add_url_rule('/order', 'order_create', views.order,
+                     methods=('GET', 'POST'))
     app.add_url_rule('/order/<base62_id>', 'order', views.order)
     app.add_url_rule('/order/<base62_id>/download', 'download', views.download)
 

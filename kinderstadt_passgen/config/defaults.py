@@ -3,6 +3,8 @@ from path import Path
 
 _BASE_DIR = Path(__file__).abspath().dirname().dirname()
 
+SECRET_KEY = '5m34a58x(3^$np08v!si#!a1btp$(h$a0qa-j_c)^!-ah=ypqs'
+
 # Celery settings
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
@@ -10,5 +12,6 @@ CELERY_RESULT_SERIALIZER = 'json'
 
 # App specific settings
 ID_ENCODE_OFFSET = 10000
+RANGE_SIZE_MAX = 50
 
 FILE_STORAGE_PATH = _BASE_DIR / '../media'
