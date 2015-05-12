@@ -4,7 +4,9 @@ import os
 import os.path
 import shutil
 import tempfile
+import time
 from cairosvg import svg2pdf
+from celery.utils.log import get_task_logger
 from flask import render_template
 from path import Path
 from PyPDF2 import PdfFileMerger
@@ -13,6 +15,8 @@ from kinderstadt_passgen.models import Order
 from kinderstadt_passgen.extensions import db, celery
 
 CHECK_ALPHABET = '0123456789ABCDEFGHJKLMNPQRSTUVWXY'
+
+logger = get_task_logger(__name__)
 
 
 @celery.task
@@ -24,6 +28,9 @@ def execute_order(id):
     the PassGen class to generate the result PDF. Finally, the result PDF
     is copied to the path the web app is looking into.
     """
+
+    logger.info('Started job {id}'.format(id=id))
+    _start = time.time()
 
     order = Order.query.get(id)
 
@@ -45,6 +52,10 @@ def execute_order(id):
 
     order.finished = datetime.now()
     db.session.commit()
+
+    _end = time.time()
+    logger.info('Created {0} passes in {1:.0f}ms'
+                .format(order.range_size, (_end-_start)*1000))
 
     return out_path
 
