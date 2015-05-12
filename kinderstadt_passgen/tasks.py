@@ -8,8 +8,11 @@ from cairosvg import svg2pdf
 from flask import render_template
 from path import Path
 from PyPDF2 import PdfFileMerger
+from stdnum import luhn
 from kinderstadt_passgen.models import Order
 from kinderstadt_passgen.extensions import db, celery
+
+CHECK_ALPHABET = '0123456789ABCDEFGHJKLMNPQRSTUVWXY'
 
 
 @celery.task
@@ -44,6 +47,20 @@ def execute_order(id):
     db.session.commit()
 
     return out_path
+
+
+def check(value):
+    """
+    Creates two-digit check value for given input value
+    """
+
+    def _check(value):
+        return luhn.calc_check_digit(value, alphabet=CHECK_ALPHABET)
+
+    a = _check(value)
+    b = _check(str(value) + str(a))
+
+    return a + b
 
 
 class PassGen(object):
@@ -89,7 +106,8 @@ class PassGen(object):
         for i in range(self.order.range_from, self.order.range_from
                        + self.order.range_size):
             pass_file = self.work_dir / 'pass_%d.pdf' % i
-            self._svg2pdf('pass.svg', pass_file, pass_id=i)
+            self._svg2pdf('pass.svg', pass_file,
+                          pass_id=i, pass_check=check(i))
             merger.append(pass_file)
 
         _passes_file = str(self.work_dir / '_passes.pdf')
@@ -106,7 +124,8 @@ class PassGen(object):
         for i in range(self.order.range_from, self.order.range_from
                        + self.order.range_size):
             agreement_file = self.work_dir / 'agreement_%d.pdf' % i
-            self._svg2pdf('agreement.svg', agreement_file, pass_id=i)
+            self._svg2pdf('agreement.svg', agreement_file,
+                          pass_id=i, pass_check=check(i))
             merger.append(agreement_file)
 
         _agreements_file = str(self.work_dir / '_agreements.pdf')

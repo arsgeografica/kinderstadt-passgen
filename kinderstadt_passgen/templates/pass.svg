@@ -5,11 +5,35 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
    id="svg2"
    viewBox="0 0 372.04724 524.40944"
    height="148mm"
-   width="105mm">
+   width="105mm"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="pass.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1022"
+     id="namedview3396"
+     showgrid="false"
+     inkscape:zoom="1.5789189"
+     inkscape:cx="96.088668"
+     inkscape:cy="262.20472"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2" />
   <defs
      id="defs4" />
   <metadata
@@ -20,7 +44,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -28,14 +52,32 @@
      transform="translate(0,-527.95276)"
      id="layer1">
     <text
-       class="passcode"
+       class=""
        id="text4136"
        y="579.76129"
        x="22.491899"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       xml:space="preserve"><tspan
+       xml:space="preserve"
+       sodipodi:linespacing="125%"><tspan
          y="579.76129"
          x="22.491899"
          id="tspan4138">{{ pass_id }}</tspan></text>
+  </g>
+  <g
+     id="g3398"
+     transform="translate(0,-483.95276)"
+     style="fill:#808080">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#808080;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="22.491899"
+       y="579.76129"
+       id="text3400"
+       class="passcode"
+       sodipodi:linespacing="125%"><tspan
+         id="tspan3402"
+         x="22.491899"
+         y="579.76129"
+         style="fill:#808080">{{pass_check}}</tspan></text>
   </g>
 </svg>

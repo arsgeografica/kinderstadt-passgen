@@ -52,6 +52,7 @@ setup(
         'path.py==7.3',
         'pgcli==0.16.3',
         'PyPDF2==1.24',
+        'python-stdnum==1.1',
     ],
     extras_require={
         'devel': [
