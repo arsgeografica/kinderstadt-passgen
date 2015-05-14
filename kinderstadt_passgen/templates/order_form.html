@@ -1,18 +1,29 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<h1>Passgenerator Dessopolis</h1>
+<div class="row">
+    <div class="jumbotron">
+        <h1>Passgenerator Dessopolis</h1>
+        <form method="POST" action="{{ url_for('order_create') }}" class="row">
+            {{ form.csrf_token }}
+            <div class="range_size col-xs-12">
+                <label for="range_size">Ich würde gerne {{ form.range_size(size=5) }} Anmeldungen erstellen.</label>
+                {% if form.range_size.errors %}
+                <ul class="error">
+                    {% for error in form.range_size.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            <div class="submit col-xs-12">
+                <input type="submit" class="btn btn-primary btn-lg" value="Und los!">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
 
-<form method="POST" action="{{ url_for('order_create') }}">
-    {{ form.csrf_token }}
-    <label for="range_size">Anzahl Pässe</label> {{ form.range_size(size=5) }}
-    {% if form.range_size.errors|length %}
-    <ul class="error">
-        {% for error in form.range_size.errors %}
-        <li>{{ error }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    <input type="submit" value="Pässe erstellen">
-</form>
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='order.css') }}">
 {% endblock %}

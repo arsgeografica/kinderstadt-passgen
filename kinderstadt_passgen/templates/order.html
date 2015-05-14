@@ -1,9 +1,27 @@
 {% extends 'base.html' %}
 
-{% block body %}
-<h1>Passwarteschlange {{ base62_id }}</h1>
 
-{% if order.finished %}
-<a href="{{ url_for('download', base62_id=order.base62_id) }}">Download</a>
-{% endif %}
+{% set body_class='waiting' %}
+{% block body %}
+<div class="row">
+    <div class="jumbotron">
+        <h1>Passwarteschlange {{ order.base62_id }}</h1>
+        <div class="status waiting">
+            <p>Ihre Pässe werden erzeugt...</p>
+        </div>
+        <div class="status ready">
+            <a href="{{ url_for('download', base62_id=order.base62_id) }}" class="btn btn-primary btn-lg">Download</a>
+        </div>
+        <div class="status error">
+            <p>Oopps. Da ist etwas schief gelaufen. Bitte probieren Sie es doch noch einmal.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='order.css') }}">
+{% endblock %}
+{% block script %}
+    <script src="{{ url_for('static', filename='order.js') }}"></script>
 {% endblock %}

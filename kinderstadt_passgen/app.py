@@ -1,6 +1,6 @@
 import os.path
 from flask import Flask
-from kinderstadt_passgen.extensions import db, celery, migrate
+from kinderstadt_passgen.extensions import db, celery, ma, migrate
 from kinderstadt_passgen import views
 
 
@@ -15,11 +15,12 @@ def factory(config=None):
                                   'migrations')
     migrate.init_app(app, db, directory=migrations_dir)
     celery.init_app(app)
+    ma.init_app(app)
 
     app.add_url_rule('/', 'home', views.home)
     app.add_url_rule('/order', 'order_create', views.order,
                      methods=('GET', 'POST'))
     app.add_url_rule('/order/<base62_id>', 'order', views.order)
-    app.add_url_rule('/order/<base62_id>/download', 'download', views.download)
+    app.add_url_rule('/order/<base62_id>.pdf', 'download', views.download)
 
     return app

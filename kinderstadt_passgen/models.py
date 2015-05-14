@@ -4,7 +4,7 @@ from path import Path
 from sqlalchemy.types import DateTime, Integer
 from sqlalchemy.schema import Column
 from datetime import datetime
-from kinderstadt_passgen.extensions import db
+from kinderstadt_passgen.extensions import db, ma
 
 
 _base62 = basehash.base62()
@@ -59,3 +59,14 @@ class Order(db.Model):
         out_file = 'passes_%s.pdf' % self.base62_id
 
         return out_path / out_file
+
+
+class OrderSchema(ma.Schema):
+
+    class Meta:
+        # Fields to expose
+        fields = ('base62_id', 'range_size', 'ordered', 'finished', '_links')
+    # Smart hyperlinking
+    _links = ma.Hyperlinks({
+        'self': ma.URLFor('order', base62_id='<base62_id>')
+    })

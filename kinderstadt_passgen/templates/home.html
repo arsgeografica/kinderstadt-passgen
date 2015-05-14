@@ -1,9 +1,17 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<h1>Passgenerator Dessopolis</h1>
+<div class="row">
+    <div class="jumbotron col-xs-12">
+        <h1>Passgenerator Dessopolis</h1>
+        <p>Mit dieser Anwendung können Sie bereits im Voraus Anmeldeformulare für
+        Dessopolis erstellen. Die erstellte PDF beinhaltet bereits die Pässe für
+        Dessopolis.</p>
+        <a class="btn btn-primary btn-lg" href="{{ url_for('order_create') }}">Los gehts!</a>
+    </div>
+</div>
+{% endblock %}
 
-<p>Blablabla</p>
-
-<a href="{{ url_for('order_create') }}">Los gehts!</a>
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
 {% endblock %}
