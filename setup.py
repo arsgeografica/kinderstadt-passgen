@@ -56,6 +56,7 @@ setup(
         'pgcli==0.16.3',
         'PyPDF2==1.24',
         'python-stdnum==1.1',
+        'uWSGI==2.0.10',
     ],
     extras_require={
         'devel': [
