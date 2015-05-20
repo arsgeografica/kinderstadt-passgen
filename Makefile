@@ -7,4 +7,11 @@ vagrant-up: ansible-prepare vagrant-destroy
 vagrant-destroy:
 	vagrant destroy --force
 
-clean: vagrant-destroy
+clean: vagrant-destroy clean-setup
+
+clean-setup:
+	rm -rf dist
+
+dist:
+	./setup.py sdist
+	ln -s `ls -1 dist | sort -r | head -1` dist/latest.tar.gz
