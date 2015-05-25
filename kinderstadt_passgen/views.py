@@ -1,4 +1,4 @@
-from flask import abort, current_app as app, jsonify, render_template, \
+from flask import abort, current_app as app, render_template, \
     redirect, request, send_file, url_for
 from kinderstadt_passgen.extensions import db
 from kinderstadt_passgen.models import Order, OrderSchema
@@ -17,7 +17,8 @@ def request_wants_json():
 def home():
     """Home route, where user enter the number of passes they want to
     generate"""
-    return render_template('home.html', max_range_size=app.config['RANGE_SIZE_MAX'])
+    return render_template('home.html',
+                           max_range_size=app.config['RANGE_SIZE_MAX'])
 
 
 def order(base62_id=None):
@@ -41,7 +42,8 @@ def order(base62_id=None):
                     raise e
                     abort(500)
 
-        return render_template('order_form.html', form=form, max_range_size=app.config['RANGE_SIZE_MAX'])
+        return render_template('order_form.html', form=form,
+                               max_range_size=app.config['RANGE_SIZE_MAX'])
     else:
         order = Order.get_by_base62_id(base62_id)
         if request_wants_json():

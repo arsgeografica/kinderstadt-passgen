@@ -56,7 +56,7 @@ def execute_order(id):
 
     _end = time.time()
     logger.info('Created {0} passes in {1:.0f}ms'
-                .format(order.range_size, (_end-_start)*1000))
+                .format(order.range_size, (_end - _start)*1000))
 
     return out_path
 
@@ -116,8 +116,8 @@ class PassGen(object):
     def _create_passes(self):
         """Create passes PDF file"""
         merger = PdfFileMerger()
-        for i in range(self.order.range_from, self.order.range_from
-                       + self.order.range_size):
+        for i in range(self.order.range_from, self.order.range_from +
+                       self.order.range_size):
             pass_file = self.work_dir / 'pass_%d.pdf' % i
             self._svg2pdf('pass.svg', pass_file,
                           pi=i, pc=check(i))
@@ -136,8 +136,8 @@ class PassGen(object):
         """Create agreement forms PDF file"""
 
         merger = PdfFileMerger()
-        for i in range(self.order.range_from, self.order.range_from
-                       + self.order.range_size):
+        for i in range(self.order.range_from, self.order.range_from +
+                       self.order.range_size):
             agreement_file = self.work_dir / 'agreement_%d.pdf' % i
             self._svg2pdf('agreement.svg', agreement_file,
                           pi=i, pc=check(i))

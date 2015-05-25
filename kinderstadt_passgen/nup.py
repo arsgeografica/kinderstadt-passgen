@@ -16,7 +16,8 @@ try:
     from pyPdf.pdf import ImmutableSet
 except ImportError:
     ImmutableSet = frozenset
-from pyPdf.generic import NameObject, DictionaryObject, ArrayObject, FloatObject
+from pyPdf.generic import NameObject, DictionaryObject, ArrayObject, \
+                          FloatObject
 
 
 # one empty A4 page as base64-encoded zipped PDF file
@@ -169,7 +170,12 @@ def isFileLike(obj):
     return False
 
 
-def generateNup(inPathOrFile, n, outPathPatternOrFile=None, dirs="RD", verbose=False):
+def generateNup(
+        inPathOrFile,
+        n,
+        outPathPatternOrFile=None,
+        dirs="RD",
+        verbose=False):
     """Generate a N-up document version.
 
     If outPathPatternOrFile is None, the output will be written
@@ -212,7 +218,7 @@ def generateNup(inPathOrFile, n, outPathPatternOrFile=None, dirs="RD", verbose=F
     docReader = PdfFileReader(inFile)
     numPages = docReader.getNumPages()
 
-    newPageSize = 2*297, 2*420
+    newPageSize = 2 * 297, 2 * 420
     np = numPages / n + numPages % n
     buf = exP1multiN(_mtA4Pdf, newPageSize, np)
 
@@ -265,7 +271,10 @@ def generateNup(inPathOrFile, n, outPathPatternOrFile=None, dirs="RD", verbose=F
             names = "ExtGState Font XObject ColorSpace Pattern Shading"
             for res in names.split():
                 res = "/" + res
-                new, newrename = PO._mergeResources(orgResources, page2Resources, res)
+                new, newrename = PO._mergeResources(
+                    orgResources,
+                    page2Resources,
+                    res)
                 if new:
                     newResources[NO(res)] = new
                     rename.update(newrename)
@@ -280,7 +289,10 @@ def generateNup(inPathOrFile, n, outPathPatternOrFile=None, dirs="RD", verbose=F
             orgContent = page1["/Contents"].getObject()
             newContentArray.append(PO._pushPopGS(orgContent, page1.pdf))
             page2Content = page2['/Contents'].getObject()
-            page2Content = PO._contentStreamRename(page2Content, rename, page1.pdf)
+            page2Content = PO._contentStreamRename(
+                page2Content,
+                rename,
+                page1.pdf)
             page2Content = ContentStream(page2Content, page1.pdf)
             page2Content.operations.insert(0, [[], "q"])
 
