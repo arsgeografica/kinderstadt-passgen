@@ -4,6 +4,8 @@
 <div class="row">
     <div class="jumbotron">
         <h1>Passgenerator Dessopolis</h1>
+        <p>Wenn Sie mehr als {{ max_range_size}} Pässe benötigen, erstellen Sie erst eine PDF, danach einfach
+        noch eine weitere.</p>
         <form method="POST" action="{{ url_for('order_create') }}" class="row">
             {{ form.csrf_token }}
             <div class="range_size col-xs-12">
