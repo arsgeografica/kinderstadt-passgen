@@ -61,7 +61,7 @@
        sodipodi:linespacing="125%"><tspan
          y="579.76129"
          x="22.491899"
-         id="tspan4138">{{ pass_id }}</tspan></text>
+         id="tspan4138">{{pi}}</tspan></text>
   </g>
   <g
      id="g3398"
@@ -78,6 +78,6 @@
          id="tspan3402"
          x="22.491899"
          y="579.76129"
-         style="fill:#808080">{{pass_check}}</tspan></text>
+         style="fill:#808080">{{pc}}</tspan></text>
   </g>
 </svg>

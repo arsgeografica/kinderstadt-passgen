@@ -7,10 +7,11 @@ import tempfile
 import time
 from cairosvg import svg2pdf
 from celery.utils.log import get_task_logger
-from flask import render_template
+from flask import current_app as app, render_template
 from path import Path
 from PyPDF2 import PdfFileMerger
 from stdnum import luhn
+from kinderstadt_passgen.nup import generateNup
 from kinderstadt_passgen.models import Order
 from kinderstadt_passgen.extensions import db, celery
 
@@ -104,6 +105,7 @@ class PassGen(object):
         agreements = self._create_agreements()
 
         merger = PdfFileMerger()
+        merger.append(str(app.config['COVER_PDF']))
         merger.append(passes)
         merger.append(agreements)
         result_file = str(self.work_dir / 'passes.pdf')
@@ -118,14 +120,16 @@ class PassGen(object):
                        + self.order.range_size):
             pass_file = self.work_dir / 'pass_%d.pdf' % i
             self._svg2pdf('pass.svg', pass_file,
-                          pass_id=i, pass_check=check(i))
+                          pi=i, pc=check(i))
             merger.append(pass_file)
 
         _passes_file = str(self.work_dir / '_passes.pdf')
         merger.write(_passes_file)
 
-        # @TODO: nup
-
+        if app.config['PASS_NUP'] > 1:
+            nup_file = str(self.work_dir / '_passes_nup.pdf')
+            generateNup(_passes_file, app.config['PASS_NUP'], nup_file)
+            return nup_file
         return _passes_file
 
     def _create_agreements(self):
@@ -136,14 +140,17 @@ class PassGen(object):
                        + self.order.range_size):
             agreement_file = self.work_dir / 'agreement_%d.pdf' % i
             self._svg2pdf('agreement.svg', agreement_file,
-                          pass_id=i, pass_check=check(i))
+                          pi=i, pc=check(i))
             merger.append(agreement_file)
 
         _agreements_file = str(self.work_dir / '_agreements.pdf')
         merger.write(_agreements_file)
 
-        # @TODO: nup
-
+        if app.config['AGREEMENT_NUP'] > 1:
+            nup_file = str(self.work_dir / '_agreements_nup.pdf')
+            generateNup(_agreements_file, app.config['AGREEMENT_NUP'],
+                        nup_file)
+            return nup_file
         return _agreements_file
 
     def _svg2pdf(self, template, out_file, **kwargs):

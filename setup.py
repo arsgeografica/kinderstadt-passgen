@@ -54,6 +54,7 @@ setup(
         'marshmallow==2.0.0b2',
         'path.py==7.3',
         'pgcli==0.16.3',
+        'pyPdf==1.13',
         'PyPDF2==1.24',
         'python-stdnum==1.1',
         'uWSGI==2.0.10',
