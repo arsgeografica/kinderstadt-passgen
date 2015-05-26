@@ -11,11 +11,10 @@
             <div class="range_size col-xs-12">
                 <label for="range_size">Ich würde gerne {{ form.range_size(size=5) }} Anmeldungen erstellen.</label>
                 {% if form.range_size.errors %}
-                <ul class="error">
-                    {% for error in form.range_size.errors %}
-                    <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
+                <div class="alert alert-danger">
+                {# @TODO This is an ugly hack around the accumulating errors #}
+                    {{ form.range_size.errors[0] }}
+                </div>
                 {% endif %}
             </div>
             <div class="submit col-xs-12">
