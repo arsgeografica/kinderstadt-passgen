@@ -156,5 +156,5 @@ class PassGen(object):
     def _svg2pdf(self, template, out_file, **kwargs):
         """Render SVG template to outfile using Jinja2, passing kwargs"""
 
-        svg = render_template(template, **kwargs)
+        svg = render_template(template, **kwargs).encode('utf-8')
         svg2pdf(bytestring=svg, write_to=out_file)

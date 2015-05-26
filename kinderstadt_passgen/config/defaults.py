@@ -19,4 +19,4 @@ FILE_STORAGE_PATH = _BASE_DIR / '../media'
 # PDF settings
 COVER_PDF = _BASE_DIR / 'templates/cover.pdf'
 PASS_NUP = 4
-AGREEMENT_NUP = 2
+AGREEMENT_NUP = 1
