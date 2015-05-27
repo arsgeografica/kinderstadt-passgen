@@ -55,8 +55,9 @@ def execute_order(id):
     db.session.commit()
 
     _end = time.time()
-    logger.info('Created {0} passes in {1:.0f}ms'
-                .format(order.range_size, (_end - _start)*1000))
+    logger.info('Finished job {id}, created {num} passes in {duration:.0f}ms'
+                .format(id=id, num=order.range_size,
+                        duration=(_end - _start)*1000))
 
     return out_path
 

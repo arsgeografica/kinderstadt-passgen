@@ -1,3 +1,4 @@
+import logging
 from path import Path
 
 
@@ -13,6 +14,7 @@ CELERY_RESULT_SERIALIZER = 'json'
 # App specific settings
 ID_ENCODE_OFFSET = 10000
 RANGE_SIZE_MAX = 50
+PASSGEN_LOG_LEVEL = logging.WARN
 
 FILE_STORAGE_PATH = _BASE_DIR / '../media'
 

@@ -1,3 +1,4 @@
+import logging
 import os.path
 from flask import Flask
 from kinderstadt_passgen.extensions import db, celery, ma, migrate
@@ -22,5 +23,8 @@ def factory(config=None):
                      methods=('GET', 'POST'))
     app.add_url_rule('/order/<base62_id>', 'order', views.order)
     app.add_url_rule('/order/<base62_id>.pdf', 'download', views.download)
+
+    logger = logging.getLogger(app.name)
+    logger.setLevel(app.config['PASSGEN_LOG_LEVEL'])
 
     return app
