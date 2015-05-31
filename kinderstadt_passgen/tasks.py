@@ -11,6 +11,7 @@ from flask import current_app as app, render_template
 from path import Path
 from PyPDF2 import PdfFileMerger
 from stdnum import luhn
+from kinderstadt_passgen import __version__
 from kinderstadt_passgen.nup import generateNup
 from kinderstadt_passgen.models import Order
 from kinderstadt_passgen.extensions import db, celery
@@ -157,5 +158,6 @@ class PassGen(object):
     def _svg2pdf(self, template, out_file, **kwargs):
         """Render SVG template to outfile using Jinja2, passing kwargs"""
 
-        svg = render_template(template, **kwargs).encode('utf-8')
+        svg = render_template(
+            template, __version__=__version__, **kwargs).encode('utf-8')
         svg2pdf(bytestring=svg, write_to=out_file)

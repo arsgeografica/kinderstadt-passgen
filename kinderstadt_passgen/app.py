@@ -2,7 +2,7 @@ import logging
 import os.path
 from flask import Flask
 from kinderstadt_passgen.extensions import db, celery, ma, migrate
-from kinderstadt_passgen import views
+from kinderstadt_passgen import views, __version__
 
 
 def factory(config=None):
@@ -10,6 +10,10 @@ def factory(config=None):
     app.config.from_object('kinderstadt_passgen.config.defaults')
     if config:
         app.config.from_object(config)
+
+    @app.context_processor
+    def inject_version():
+        return dict(__version__=__version__)
 
     db.init_app(app)
     migrations_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)),

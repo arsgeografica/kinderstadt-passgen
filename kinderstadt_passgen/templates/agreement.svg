@@ -27,9 +27,9 @@
      inkscape:window-height="1022"
      id="namedview3396"
      showgrid="false"
-     inkscape:zoom="1.1164643"
-     inkscape:cx="231.99047"
-     inkscape:cy="667.40525"
+     inkscape:zoom="0.55823215"
+     inkscape:cx="518.60958"
+     inkscape:cy="125.64783"
      inkscape:window-x="0"
      inkscape:window-y="25"
      inkscape:window-maximized="1"
@@ -96,16 +96,16 @@
            id="tspan3533">Einverständniserklärung für die Verwendung von Foto- und/oder</tspan></tspan><tspan
          sodipodi:role="line"
          x="70.906517"
-         y="75.224838"
+         y="104.39203"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:23.33374977px;line-height:125%;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, Bold Condensed';text-align:start;writing-mode:lr-tb;text-anchor:start"
          id="tspan4280"><tspan
            x="70.906517"
            y="75.224838"
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:23.33374977px;line-height:125%;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, Bold Condensed';text-align:start;writing-mode:lr-tb;text-anchor:start"
-           id="tspan4282"> </tspan></tspan><tspan
+           id="tspan4282" /></tspan><tspan
          sodipodi:role="line"
          x="161.76346"
-         y="104.39203"
+         y="133.55922"
          id="tspan3535"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:23.33374977px;line-height:125%;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, Bold Condensed';text-align:start;writing-mode:lr-tb;text-anchor:start"><tspan
            x="161.76346"
@@ -297,6 +297,17 @@
          id="tspan4440"
          x="70.865234"
          y="943.65802" /></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:125%;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="669.07709"
+       y="699.34271"
+       id="text3444"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3446"
+         x="669.07709"
+         y="699.34271">passgen {{ __version__ }}</tspan></text>
   </g>
   <g
      id="g4048"
