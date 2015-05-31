@@ -10,6 +10,7 @@ SECRET_KEY = '5m34a58x(3^$np08v!si#!a1btp$(h$a0qa-j_c)^!-ah=ypqs'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+CELERYD_CONCURRENCY = 2
 
 # App specific settings
 ID_ENCODE_OFFSET = 10000
