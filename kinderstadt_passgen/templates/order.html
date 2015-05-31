@@ -6,10 +6,24 @@
 <div class="row">
     <div class="jumbotron">
         <h1>Passwarteschlange {{ order.base62_id }}</h1>
+        <p>Liebe Erziehungsberechtigte,</p>
+        <p>um die Persönlichkeitsrechte Ihrer Kinder an Foto- und Filmmaterial
+        zu wahren und um die Warteschlangen am Eingang zur Kinderstadt zu
+        verkürzen, bitten wir Sie, Ihre Kinder im Vorfeld der Kinderstadt
+        anzumelden.</p>
+        <p>Nicht angemeldete Kinder müssen entweder noch einmal nach Hause, um
+        die Unterschrift der Erziehungsberechtigen einzuholen, oder ein vom
+        Veranstalter zur Verfügung gestelltes T-Shirt tragen. Nur so können wir
+        gewährleisten, dass kein Bildmaterial mit Kindern veröffentlicht wird,
+        deren Erziehungsberechtigte dem nicht zugestimmt haben.</p>
+        <p>Wir danken für Ihr Verständnis und wünschen Ihren Kindern eine
+        wunderbare Zeit in Dessopolis!</p>
+        <p>punkt e.V.</p>
         <div class="status waiting">
-            <p>Ihre Pässe werden erzeugt, das kann einen kleinen Moment dauern...</p>
+            <p>Ihre Pässe werden erstellt. Das kann einen kleinen Moment dauern.</p>
         </div>
         <div class="status ready">
+            <p>Fertig! Wenn Sie auf den Download-Button klicken, öffnet sich Ihre PDF-Datei automatisch.</p>
             <a href="{{ url_for('download', base62_id=order.base62_id) }}" class="btn btn-primary btn-lg">Download</a>
         </div>
         <div class="status error">
