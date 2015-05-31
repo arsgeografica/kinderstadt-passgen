@@ -14,4 +14,7 @@ clean-setup:
 
 dist:
 	./setup.py sdist
+	rm -f dist/latest.tar.gz
 	ln -s `ls -1 dist | sort -r | head -1` dist/latest.tar.gz
+
+.PHONY: dist
