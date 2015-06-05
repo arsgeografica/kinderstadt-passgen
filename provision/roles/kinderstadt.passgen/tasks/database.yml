@@ -1,0 +1,14 @@
+---
+- name: Create database user
+  postgresql_user:
+    name: kinderstadt
+
+- name: Create database
+  postgresql_db:
+    name: kinderstadt_passgen
+    owner: kinderstadt
+    encoding: UTF-8
+
+- name: Update database schema
+  # shell: '. /home/cwygoda/.pyenv/.pyenvrc && pyenv activate {{ passgen_virtualenv_name }} && passgen --config kinderstadt_passgen.config.production db upgrade head'
+  shell: '{{ passgen_virtualenv_dir }}/bin/passgen --config kinderstadt_passgen.config.production db upgrade head'

@@ -1,0 +1,53 @@
+---
+- name: Install required system packages
+  apt:
+    name: '{{ item }}'
+  with_items:
+    - libpq-dev
+    - libffi-dev
+    - python-psycopg2  # this one is for ansible
+
+# This assumes that pyenv and a .pyenvrc are found in /home/cwygoda...
+- name: Create virtual environments
+  shell: . /home/cwygoda/.pyenv/.pyenvrc && pyenv virtualenv 2.7.10 {{ passgen_virtualenv_name }}
+  args:
+    creates: '{{ passgen_virtualenv_dir }}/bin/python'
+
+- name: Create install directory
+  file:
+    owner: '{{ passgen_user }}'
+    group: '{{ passgen_group }}'
+    mode: '0775'
+    path: '{{ passgen_install_dir }}'
+    state: directory
+
+- name: Upload passgen source distribution tarball
+  unarchive:
+    src: files/latest.tar.gz
+    dest: '{{ passgen_install_dir }}'
+    owner: '{{ passgen_user }}'
+    group: '{{ passgen_group }}'
+
+- name: Delete old stuff
+  command: 'rm -rf {{ passgen_install_dir }}/code'
+  args:
+    removes: '{{ passgen_install_dir }}/code'
+
+- name: Move stuff to where it belongs
+  shell: 'mv kinderstadt-passgen-* code'
+  args:
+    chdir: '{{ passgen_install_dir }}'
+
+- name: Delete stuff
+  shell: 'rm -rf kinderstadt-passgen-*'
+  args:
+    chdir: '{{ passgen_install_dir }}'
+
+- name: Set up project
+  pip:
+    virtualenv: '{{ passgen_virtualenv_dir }}'
+    name: '{{ passgen_install_dir }}/code'
+    extra_args: --editable
+
+- name: Fix virtualenv owner/group
+  command: 'chown -R {{ passgen_user }}:{{ passgen_group }} {{ passgen_virtualenv_dir }}'

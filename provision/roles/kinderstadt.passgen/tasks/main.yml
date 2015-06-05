@@ -1,0 +1,4 @@
+---
+- include: virtualenv.yml
+- include: database.yml
+- include: services.yml

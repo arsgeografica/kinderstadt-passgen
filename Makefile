@@ -1,5 +1,5 @@
 ansible-prepare:
-	ansible-galaxy install --force -r ansible/requirements.yml
+	ansible-galaxy install --force -r requirements.yml -p provision/roles
 
 vagrant-up: ansible-prepare vagrant-destroy
 	vagrant up
@@ -14,7 +14,9 @@ clean-setup:
 
 dist:
 	./setup.py sdist
-	rm -f dist/latest.tar.gz
-	ln -s `ls -1 dist | sort -r | head -1` dist/latest.tar.gz
+
+	mkdir -p provision/files
+	rm -rf provision/files/latest.tar.gz
+	cp dist/`ls -1 dist | sort -r | head -1` provision/files/latest.tar.gz
 
 .PHONY: dist

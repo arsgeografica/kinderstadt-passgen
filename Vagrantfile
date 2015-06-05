@@ -18,7 +18,10 @@ Vagrant.configure(2) do |config|
     end
 
     config.vm.provision "ansible" do |ansible|
-        ansible.playbook = "ansible/main.yml"
+        ansible.playbook = "provision/setup.yml"
         ansible.sudo = true
+        ansible.extra_vars = {
+            'core_hostname' => 'passgen'
+        }
     end
 end
