@@ -3,6 +3,6 @@ var gulp = require('gulp'),
 
 
 gulp.task('build', ['vendor'], function(callback) {
-    runSequence(['styles', 'code']);
+    runSequence(['styles', 'code', 'assets']);
     callback();
 });

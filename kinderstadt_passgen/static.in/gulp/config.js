@@ -3,6 +3,12 @@ var dst = '../static';
 
 
 module.exports = {
+    assets: {
+        src: src + '/assets/**/*',
+        dst: dst + '/assets',
+        watch: src + '/assets/**/*'
+    },
+
     bower: {
         dst: src + '/vendor'
     },
