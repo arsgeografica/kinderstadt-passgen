@@ -7,7 +7,7 @@ directory = {{ passgen_install_dir }}
 command = {{ passgen_virtualenv_dir}}/bin/uwsgi --ini {{ passgen_uwsgi_file }}
 
 priority = 1500
-startsecs = 2
+startsecs = 1
 stopsignal = INT
 exitcodes = 30
 
@@ -23,5 +23,5 @@ user = {{ passgen_user }}
 stdout_logfile = /srv/passgen/logs/worker.stdout.log
 stderr_logfile = /srv/passgen/logs/worker.stderr.log
 
-startsecs = 10
+startsecs = 1
 stopwaitsecs = 120
