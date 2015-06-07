@@ -1,3 +1,7 @@
+[group:passgen]
+programs=passgen_web,passgen_worker
+
+
 [program:passgen_web]
 directory = {{ passgen_install_dir }}
 command = {{ passgen_virtualenv_dir}}/bin/uwsgi --ini {{ passgen_uwsgi_file }}
@@ -5,6 +9,7 @@ command = {{ passgen_virtualenv_dir}}/bin/uwsgi --ini {{ passgen_uwsgi_file }}
 priority = 1500
 startsecs = 2
 stopsignal = INT
+exitcodes = 30
 
 stdout_logfile = {{ passgen_log_dir }}/uwsgi.stdout.log
 stderr_logfile = {{ passgen_log_dir }}/uwsgi.stderr.log
@@ -13,7 +18,7 @@ stderr_logfile = {{ passgen_log_dir }}/uwsgi.stderr.log
 [program:passgen_worker]
 directory = {{ passgen_install_dir }}
 command = {{ passgen_virtualenv_dir}}/bin/passgen worker
-user = vagrant
+user = {{ passgen_user }}
 
 stdout_logfile = /srv/passgen/logs/worker.stdout.log
 stderr_logfile = /srv/passgen/logs/worker.stderr.log

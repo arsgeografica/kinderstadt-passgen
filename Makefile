@@ -13,6 +13,7 @@ clean-setup:
 	rm -rf dist
 
 dist:
+	cd kinderstadt_passgen/static.in; gulp build
 	./setup.py sdist
 
 	mkdir -p provision/files

@@ -21,7 +21,8 @@ Vagrant.configure(2) do |config|
         ansible.playbook = "provision/setup.yml"
         ansible.sudo = true
         ansible.extra_vars = {
-            'core_hostname' => 'passgen'
+            'core_hostname' => 'passgen',
+            'postgis_is_dev' => true,
         }
     end
 end

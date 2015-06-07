@@ -5,6 +5,9 @@
     state: reloaded
 
 - name: reload supervisord
+  command: service supervisor restart
+
+- name: restart rabbitmq
   service:
-    name: supervisor
+    name: rabbitmq-server
     state: restarted

@@ -7,9 +7,9 @@
     - libffi-dev
     - python-psycopg2  # this one is for ansible
 
-# This assumes that pyenv and a .pyenvrc are found in /home/cwygoda...
+# This assumes that pyenv and a pyenvrc are found in /home/cwygoda...
 - name: Create virtual environments
-  shell: . /home/cwygoda/.pyenv/.pyenvrc && pyenv virtualenv 2.7.10 {{ passgen_virtualenv_name }}
+  shell: . /home/cwygoda/.pyenv/pyenvrc && pyenv virtualenv 2.7.10 {{ passgen_virtualenv_name }}
   args:
     creates: '{{ passgen_virtualenv_dir }}/bin/python'
 
@@ -49,5 +49,8 @@
     name: '{{ passgen_install_dir }}/code'
     extra_args: --editable
 
-- name: Fix virtualenv owner/group
-  command: 'chown -R {{ passgen_user }}:{{ passgen_group }} {{ passgen_virtualenv_dir }}'
+- name: Fix owner/group
+  command: 'chown -R {{ passgen_user }}:{{ passgen_group }} {{ item }}'
+  with_items:
+    - '{{ passgen_virtualenv_dir }}'
+    - '{{ passgen_install_dir }}/code'

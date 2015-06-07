@@ -1,23 +1,23 @@
 ---
-- name: Ensure log dir
+- name: Services | Ensure log dir
   file:
     name: '{{ passgen_log_dir }}'
     state: directory
     mode: 0777
 
-- name: Create uWSGI configuration
+- name: Services | Create uWSGI configuration
   template:
     src: uwsgi.j2
     dest: '{{ passgen_uwsgi_file }}'
     owner: '{{ passgen_user }}'
 
-- name: Create nginx configuration
+- name: Services | Create nginx configuration
   template:
     src: nginx.j2
     dest: /etc/nginx/sites-available/passgen
     owner: '{{ passgen_user }}'
 
-- name: Create supervisord configuration
+- name: Services | Create supervisord configuration
   template:
     src: supervisord.conf.j2
     dest: '{{ passgen_supervisord_file }}'
@@ -25,7 +25,7 @@
   notify:
     - reload supervisord
 
-- name: Enable nginx configuration
+- name: Services | Enable nginx configuration
   file:
     src: /etc/nginx/sites-available/passgen
     dest: /etc/nginx/sites-enabled/passgen
