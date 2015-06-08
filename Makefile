@@ -12,6 +12,7 @@ clean: vagrant-destroy clean-setup
 clean-setup:
 	rm -rf dist
 
+.PHONY: dist
 dist:
 	cd kinderstadt_passgen/static.in; gulp build
 	./setup.py sdist
@@ -20,4 +21,10 @@ dist:
 	rm -rf provision/files/latest.tar.gz
 	cp dist/`ls -1 dist | sort -r | head -1` provision/files/latest.tar.gz
 
-.PHONY: dist
+.PHONY: deploy
+deploy:
+	ansible-playbook \
+		-i "wygoda.net," \
+		--extra-vars "core_hostname=faron" \
+		--become --ask-become-pass \
+		provision/setup.yml
