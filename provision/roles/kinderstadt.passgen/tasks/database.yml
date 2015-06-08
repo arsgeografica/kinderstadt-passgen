@@ -11,3 +11,5 @@
 
 - name: Database | Update schema
   shell: '{{ passgen_virtualenv_dir }}/bin/passgen --config kinderstadt_passgen.config.production db upgrade head'
+  become: true
+  become_user: '{{ passgen_user }}'

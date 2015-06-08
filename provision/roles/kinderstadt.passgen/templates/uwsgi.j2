@@ -5,7 +5,7 @@ pythonpath = {{ passgen_install_dir }}/code
 wsgi = kinderstadt_passgen.wsgi
 
 uid = {{ passgen_user }}
-uid = {{ passgen_group }}
+gid = {{ passgen_group }}
 
 env = PASSGEN_CONFIG_MODULE=kinderstadt_passgen.config.production
 

@@ -19,7 +19,7 @@ server {
     {%- if not passgen_server_name %}
     # The host name to respond to
     server_name {{ passgen_server_name }};
-    {% endif -%}
+    {% endif %}
 
     # Path for static files
     root {{ passgen_static_dir }};

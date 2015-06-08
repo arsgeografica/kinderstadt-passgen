@@ -49,6 +49,14 @@
     name: '{{ passgen_install_dir }}/code'
     extra_args: --editable
 
+- name: Services | Ensure log dir
+  file:
+    name: '{{ passgen_log_dir }}'
+    state: directory
+    mode: 0770
+    owner: '{{ passgen_user }}'
+    group: root
+
 - name: Virtualenv | Fix owner/group
   command: 'chown -R {{ passgen_user }}:{{ passgen_group }} {{ item }}'
   with_items:

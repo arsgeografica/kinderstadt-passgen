@@ -1,10 +1,4 @@
 ---
-- name: Services | Ensure log dir
-  file:
-    name: '{{ passgen_log_dir }}'
-    state: directory
-    mode: 0777
-
 - name: Services | Create uWSGI configuration
   template:
     src: uwsgi.j2
