@@ -1,0 +1,16 @@
+---
+- name: reload nginx
+  service:
+    name: nginx
+    state: reloaded
+
+- name: reload supervisord
+  service:
+    name: supervisor
+    state: restarted
+    sleep: 5
+
+- name: restart rabbitmq
+  service:
+    name: rabbitmq-server
+    state: restarted

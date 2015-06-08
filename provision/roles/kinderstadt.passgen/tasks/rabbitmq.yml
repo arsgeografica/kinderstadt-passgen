@@ -1,0 +1,27 @@
+---
+- name: RabbitMQ | Install server
+  apt:
+    name: rabbitmq-server
+
+- name: RabbitMQ | Enable web management console
+  rabbitmq_plugin:
+    name: rabbitmq_management
+    state: enabled
+  notify:
+    - restart rabbitmq
+
+- name: RabbitMQ | Add passgen vhost
+  rabbitmq_vhost:
+    name: passgen
+    state: present
+
+- name: RabbitMQ | Add kinderstadt user
+  rabbitmq_user:
+    user: kinderstadt
+    password: kinderstadt
+    state: present
+    force: yes
+    vhost: passgen
+    configure_priv: .*
+    read_priv: .*
+    write_priv: .*

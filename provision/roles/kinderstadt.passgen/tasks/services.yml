@@ -1,0 +1,28 @@
+---
+- name: Services | Create uWSGI configuration
+  template:
+    src: uwsgi.j2
+    dest: '{{ passgen_uwsgi_file }}'
+    owner: '{{ passgen_user }}'
+
+- name: Services | Create nginx configuration
+  template:
+    src: nginx.j2
+    dest: /etc/nginx/sites-available/passgen
+    owner: '{{ passgen_user }}'
+
+- name: Services | Create supervisord configuration
+  template:
+    src: supervisord.conf.j2
+    dest: '{{ passgen_supervisord_file }}'
+    owner: '{{ passgen_user }}'
+  notify:
+    - reload supervisord
+
+- name: Services | Enable nginx configuration
+  file:
+    src: /etc/nginx/sites-available/passgen
+    dest: /etc/nginx/sites-enabled/passgen
+    state: link
+  notify:
+    - reload nginx

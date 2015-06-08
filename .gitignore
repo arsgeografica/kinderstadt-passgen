@@ -1,0 +1,9 @@
+/*.egg
+/*.egg-info
+/ansible.log
+/ansible/lib
+/build
+/dist
+/MANIFEST
+/media
+/passgen.log*

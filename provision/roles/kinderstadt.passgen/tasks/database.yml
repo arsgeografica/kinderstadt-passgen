@@ -1,0 +1,15 @@
+---
+- name: Database | Create user
+  postgresql_user:
+    name: kinderstadt
+
+- name: Database | Create database
+  postgresql_db:
+    name: kinderstadt_passgen
+    owner: kinderstadt
+    encoding: UTF-8
+
+- name: Database | Update schema
+  shell: '{{ passgen_virtualenv_dir }}/bin/passgen --config kinderstadt_passgen.config.production db upgrade head'
+  become: true
+  become_user: '{{ passgen_user }}'

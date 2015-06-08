@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="row">
+    <div class="jumbotron">
+        <h1>Passgenerator Dessopolis</h1>
+        <p>Wenn Sie mehr als {{ max_range_size}} Pässe benötigen, erstellen Sie erst eine PDF-Datei und danach eine weitere.</p>
+        <form method="POST" action="{{ url_for('order_create') }}" class="row">
+            {{ form.csrf_token }}
+            <div class="range_size col-xs-12">
+                <label for="range_size">
+                Ich würde gerne {{ form.range_size(size=5) }} Anmeldungen erstellen.</label>
+                {% if form.range_size.errors %}
+                <div class="alert alert-danger">
+                {# @TODO This is an ugly hack around the accumulating errors #}
+                    {{ form.range_size.errors[0] }}
+                </div>
+                {% endif %}
+            </div>
+            <div class="submit col-xs-12">
+                <input type="submit" class="btn btn-primary btn-lg" value="Und los!">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='order.css') }}">
+{% endblock %}

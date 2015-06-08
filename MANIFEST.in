@@ -1,0 +1,5 @@
+include versioneer.py
+include kinderstadt_passgen/_version.py
+recursive-include kinderstadt_passgen/migrations *
+recursive-include kinderstadt_passgen/static *
+recursive-include kinderstadt_passgen/templates *

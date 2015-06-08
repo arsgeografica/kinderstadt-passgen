@@ -1,0 +1,20 @@
+@import 'bootstrap/less/bootstrap';
+@import 'base';
+
+.status.waiting,
+.status.ready,
+.status.error {
+    display: none;
+}
+
+body.waiting .status.waiting {
+    display: block;
+}
+
+body.ready .status.ready {
+    display: block;
+}
+
+body.error .status.error {
+    display: block;
+}

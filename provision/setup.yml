@@ -1,0 +1,7 @@
+---
+- hosts: all
+  roles:
+    - role: arsgeografica.core
+    - role: arsgeografica.webserver
+    - role: arsgeografica.postgis
+    - role: kinderstadt.passgen
