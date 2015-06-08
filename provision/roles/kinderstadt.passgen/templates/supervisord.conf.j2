@@ -19,6 +19,7 @@ stderr_logfile = {{ passgen_log_dir }}/uwsgi.stderr.log
 directory = {{ passgen_install_dir }}
 command = {{ passgen_virtualenv_dir}}/bin/passgen worker
 user = {{ passgen_user }}
+environment = HOME=/home/{{ passgen_user }}
 
 stdout_logfile = /srv/passgen/logs/worker.stdout.log
 stderr_logfile = /srv/passgen/logs/worker.stderr.log

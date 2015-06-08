@@ -4,6 +4,8 @@ server {
     listen [::]:80;
     listen 80;
 
+    server_name {{ passgen_server_name }};
+
     # listen on the www host
     server_name www.{{ passgen_server_name }};
 

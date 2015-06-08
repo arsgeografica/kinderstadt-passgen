@@ -11,6 +11,7 @@ passgen_virtualenv_dir: /home/cwygoda/.pyenv/versions/{{ passgen_virtualenv_name
 passgen_uwsgi_file: /srv/passgen/uwsgi.ini
 passgen_server_name: '*'
 passgen_static_dir: /srv/passgen/code/kinderstadt_passgen/static
-passgen_url_path: /dessopolis
+passgen_url_path: /
 passgen_supervisord_file: /etc/supervisor/conf.d/passgen.conf
 passgen_log_dir: /srv/passgen/logs
+passgen_server_name: localhost
