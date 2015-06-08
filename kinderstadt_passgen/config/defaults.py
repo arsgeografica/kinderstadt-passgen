@@ -1,4 +1,5 @@
 import logging
+import sys
 from path import Path
 from kombu import Exchange, Queue
 
@@ -34,9 +35,14 @@ CELERY_ROUTES = ({
 # App specific settings
 ID_ENCODE_OFFSET = 10000
 RANGE_SIZE_MAX = 50
-PASSGEN_LOG_LEVEL = logging.WARN
-
 FILE_STORAGE_PATH = _BASE_DIR / '../media'
+
+LOG_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+LOG_LEVEL = logging.INFO
+LOG_FILE = _BASE_DIR / '../passgen.log'
+LOG_FILE_MAX_BYTES = 10 * 1024*1024
+LOG_FILE_BACKUP_COUNT = 5
+LOG_FILE_LOG_LEVEL = LOG_LEVEL
 
 # PDF settings
 COVER_PDF = _BASE_DIR / 'templates/cover.pdf'

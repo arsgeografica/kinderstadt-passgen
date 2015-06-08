@@ -1,3 +1,4 @@
+import logging
 from flask import abort, current_app as app, render_template, \
     redirect, request, send_file, url_for
 from kinderstadt_passgen.extensions import db
@@ -29,18 +30,20 @@ def order(base62_id=None):
         form = OrderForm(request.form)
         if 'POST' == request.method:
             if form.validate_on_submit():
+                logger = logging.getLogger(__name__)
                 order = Order.create(size=form.range_size.data)
+                logger.info('Created order %d for %d passes',
+                            order.id, order.range_size)
                 try:
                     execute_order.apply_async([order.id])
+                    logger.info('Created task for order %d', order.id)
 
                     return redirect(
                         url_for('order', base62_id=order.base62_id))
                 except Exception, e:
-                    # TODO: Logging
                     db.session.delete(order)
                     db.session.commit()
                     raise e
-                    abort(500)
 
         return render_template('order_form.html', form=form,
                                max_range_size=app.config['RANGE_SIZE_MAX'])
