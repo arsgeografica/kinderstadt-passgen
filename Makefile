@@ -1,3 +1,5 @@
+PASSGEN_SERVER_NAME = localhost
+
 ansible-prepare:
 	ansible-galaxy install --force -r requirements.yml -p provision/roles
 
@@ -22,9 +24,9 @@ dist:
 	cp dist/`ls -1 dist | sort -r | head -1` provision/files/latest.tar.gz
 
 .PHONY: deploy
-deploy:
+deploy: dist
 	ansible-playbook \
 		-i "wygoda.net," \
-		--extra-vars "core_hostname=faron" \
+		--extra-vars "core_hostname=faron passgen_server_name=$(PASSGEN_SERVER_NAME)" \
 		--become --ask-become-pass \
 		provision/setup.yml
