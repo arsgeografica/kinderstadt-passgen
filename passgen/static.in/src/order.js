@@ -3,6 +3,7 @@ var $ = require('jquery'),
 
 
 var body = $('body'),
+    pending = $('._pending'),
     progress_bar = $('.progress .progress-bar');
 
 var query = throttle(function() {
@@ -17,6 +18,15 @@ var query = throttle(function() {
             .css('width', order.progress + '%')
             .attr('aria-valuenow', order.progress)
             .text(order.progress + '%');
+
+        // Show pending or not?
+        if(order._pending) {
+            body.addClass('has_pending');
+            pending.text(order._pending);
+        } else {
+            body.removeClass('has_pending');
+            pending.text('');
+        }
 
         // Advance status -> change view
         if(order.finished) {

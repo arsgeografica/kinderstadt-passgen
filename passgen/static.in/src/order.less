@@ -2,9 +2,14 @@
 @import 'base';
 
 .status.waiting,
+.status.waiting .pending,
 .status.ready,
 .status.error {
     display: none;
+}
+
+body.has_pending .status.waiting .pending {
+    display: inline;
 }
 
 body.waiting .status.waiting {
