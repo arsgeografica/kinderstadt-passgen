@@ -15,6 +15,12 @@ body.ready .status.ready {
     display: block;
 }
 
-body.error .status.error {
-    display: block;
+body.error {
+    .status.error {
+        display: block;
+    }
+
+    .status.progress {
+        display: none
+    }
 }

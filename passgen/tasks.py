@@ -124,12 +124,13 @@ class PassGen(object):
         self.result_file = result_file
 
     def _add_step(self):
-        value = self._done_steps + 1
-        self._done_steps = value
-        self.order.progess = int(value / self._num_steps * 100)
-        logger.debug('Progress for order %d: %d out of %d', self.order.id, value, self._num_steps)
-        db.session.add(self.order)
+        self._done_steps = value = self._done_steps + 1
+        progress = int(1.0 * value / self._num_steps * 100)
+        self.order.progress = progress
+        logger.debug('Progress for order %d: %d out of %d (%d%%)',
+                     self.order.id, value, self._num_steps, progress)
         db.session.flush()
+        db.session.commit()
 
     def _create_passes(self):
         """Create passes PDF file"""

@@ -66,7 +66,9 @@ class OrderSchema(ma.Schema):
 
     class Meta:
         # Fields to expose
-        fields = ('base62_id', 'range_size', 'ordered', 'finished', '_links')
+        fields = ('base62_id', 'range_size', 'ordered', 'finished', 'progress',
+                  '_links')
+
     # Smart hyperlinking
     _links = ma.Hyperlinks({
         'self': ma.URLFor('order', base62_id='<base62_id>')
