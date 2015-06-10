@@ -4,7 +4,7 @@ from path import Path
 from sqlalchemy.types import DateTime, Integer
 from sqlalchemy.schema import Column
 from datetime import datetime
-from kinderstadt_passgen.extensions import db, ma
+from passgen.extensions import db, ma
 
 
 _base62 = basehash.base62()

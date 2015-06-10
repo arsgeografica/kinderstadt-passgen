@@ -1,10 +1,10 @@
 import logging
-from flask import abort, current_app as app, render_template, \
-    redirect, request, send_file, url_for
-from kinderstadt_passgen.extensions import db
-from kinderstadt_passgen.models import Order, OrderSchema
-from kinderstadt_passgen.tasks import execute_order
-from kinderstadt_passgen.forms import OrderForm
+from flask import abort, current_app as app, render_template, redirect, \
+                  request, send_file, url_for
+from passgen.extensions import db
+from passgen.models import Order, OrderSchema
+from passgen.tasks import execute_order
+from passgen.forms import OrderForm
 
 
 def request_wants_json():

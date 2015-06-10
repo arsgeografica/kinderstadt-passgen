@@ -17,7 +17,7 @@ stderr_logfile = {{ passgen_log_dir }}/uwsgi.stderr.log
 
 [program:passgen_worker]
 directory = {{ passgen_install_dir }}
-command = {{ passgen_virtualenv_dir}}/bin/passgen --config=kinderstadt_passgen.config.production worker
+command = {{ passgen_virtualenv_dir}}/bin/passgen --config=passgen.config.production worker
 user = {{ passgen_user }}
 environment = HOME=/home/{{ passgen_user }},PYTHONPATH={{ passgen_install_dir }}/code
 

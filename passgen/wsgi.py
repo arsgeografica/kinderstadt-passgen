@@ -1,5 +1,5 @@
 import os
-from kinderstadt_passgen.app import factory
+from passgen.app import factory
 
 
 if 'PASSGEN_CONFIG_MODULE' not in os.environ:

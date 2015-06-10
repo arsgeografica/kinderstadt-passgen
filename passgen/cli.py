@@ -1,13 +1,13 @@
 from celery.bin.celery import main as celery_main
 import click
-from kinderstadt_passgen.app import factory
+from passgen.app import factory
 from flask.ext import migrate as migrate_extension
 from pgcli.main import PGCli
 
 
 @click.group()
 @click.option('--debug/--no-debug', default=True)
-@click.option('--config', default='kinderstadt_passgen.config.development')
+@click.option('--config', default='passgen.config.development')
 @click.pass_context
 def cli(ctx, debug, config):
     """

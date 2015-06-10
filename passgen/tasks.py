@@ -11,10 +11,10 @@ from flask import current_app as app, render_template
 from path import Path
 from PyPDF2 import PdfFileMerger
 from stdnum import luhn
-from kinderstadt_passgen import __version__
-from kinderstadt_passgen.nup import generateNup
-from kinderstadt_passgen.models import Order
-from kinderstadt_passgen.extensions import db, celery
+from passgen import __version__
+from passgen.nup import generateNup
+from passgen.models import Order
+from passgen.extensions import db, celery
 
 CHECK_ALPHABET = '0123456789ABCDEFGHJKLMNPQRSTUVWXY'
 

@@ -16,7 +16,7 @@ clean-setup:
 
 .PHONY: dist
 dist:
-	cd kinderstadt_passgen/static.in; gulp build
+	cd passgen/static.in; gulp build
 	./setup.py sdist
 
 	mkdir -p provision/files
