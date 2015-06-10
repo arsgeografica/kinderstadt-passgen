@@ -14,9 +14,12 @@ clean: vagrant-destroy clean-setup
 clean-setup:
 	rm -rf dist
 
+passgen/static.in/node_modules:
+	cd passgen/static.in; npm install
+
 .PHONY: dist
-dist:
-	cd kinderstadt_passgen/static.in; gulp build
+dist: passgen/static.in/node_modules
+	cd passgen/static.in; gulp build
 	./setup.py sdist
 
 	mkdir -p provision/files

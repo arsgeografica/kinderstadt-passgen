@@ -1,5 +1,5 @@
-from kinderstadt_passgen.models import Order
-from kinderstadt_passgen.tasks import PassGen, execute_order
+from passgen.models import Order
+from passgen.tasks import PassGen, execute_order
 
 
 def test_create_pass(app):

@@ -7,10 +7,10 @@ import versioneer
 
 
 versioneer.VCS = 'git'
-versioneer.versionfile_source = 'kinderstadt_passgen/_version.py'
-versioneer.versionfile_build = 'kinderstadt_passgen/_version.py'
+versioneer.versionfile_source = 'passgen/_version.py'
+versioneer.versionfile_build = 'passgen/_version.py'
 versioneer.tag_prefix = 'v'
-versioneer.parentdir_prefix = 'kinderstadt_passgen-'
+versioneer.parentdir_prefix = 'passgen-'
 
 
 class PyTest(TestCommand):
@@ -72,6 +72,6 @@ setup(
         'testing.postgresql'],
     entry_points={
         'console_scripts': [
-            'passgen=kinderstadt_passgen.cli:main'],
+            'passgen=passgen.cli:main'],
     },
 )

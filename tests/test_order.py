@@ -1,4 +1,4 @@
-from kinderstadt_passgen.models import Order
+from passgen.models import Order
 
 
 def test_order_creation(app):

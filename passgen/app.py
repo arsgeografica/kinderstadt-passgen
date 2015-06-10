@@ -2,8 +2,8 @@ import logging
 import logging.handlers
 import os.path
 from flask import Flask
-from kinderstadt_passgen.extensions import db, celery, ma, migrate
-from kinderstadt_passgen import views, __version__
+from passgen.extensions import db, celery, ma, migrate
+from passgen import views, __version__
 
 
 def setup_logging(app):
@@ -26,7 +26,7 @@ def factory(config=None):
 
     app = Flask(__name__.split('.')[0])
 
-    app.config.from_object('kinderstadt_passgen.config.defaults')
+    app.config.from_object('passgen.config.defaults')
     if config:
         app.config.from_object(config)
 

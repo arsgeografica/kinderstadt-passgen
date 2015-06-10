@@ -11,10 +11,10 @@ from flask import current_app as app, render_template
 from path import Path
 from PyPDF2 import PdfFileMerger
 from stdnum import luhn
-from kinderstadt_passgen import __version__
-from kinderstadt_passgen.nup import generateNup
-from kinderstadt_passgen.models import Order
-from kinderstadt_passgen.extensions import db, celery
+from passgen import __version__
+from passgen.nup import generateNup
+from passgen.models import Order
+from passgen.extensions import db, celery
 
 CHECK_ALPHABET = '0123456789ABCDEFGHJKLMNPQRSTUVWXY'
 
@@ -92,6 +92,13 @@ class PassGen(object):
         if not self.work_dir:
             self.work_dir = Path(tempfile.mkdtemp(suffix='passgen'))
 
+        pass_nup = app.config['PASS_NUP']
+        pass_steps = self.order.range_size + (2 if pass_nup > 1 else + 1)
+        agreement_nup = app.config['AGREEMENT_NUP']
+        agreement_steps = self.order.range_size + (2 if agreement_nup > 1 else + 1)
+        self._num_steps = 1 + pass_steps + agreement_steps
+        self._done_steps = 0
+
     def cleanup(self):
         """Delete (temporary) files"""
 
@@ -112,8 +119,18 @@ class PassGen(object):
         merger.append(agreements)
         result_file = str(self.work_dir / 'passes.pdf')
         merger.write(result_file)
+        self._add_step()
 
         self.result_file = result_file
+
+    def _add_step(self):
+        self._done_steps = value = self._done_steps + 1
+        progress = int(1.0 * value / self._num_steps * 100)
+        self.order.progress = progress
+        logger.debug('Progress for order %d: %d out of %d (%d%%)',
+                     self.order.id, value, self._num_steps, progress)
+        db.session.flush()
+        db.session.commit()
 
     def _create_passes(self):
         """Create passes PDF file"""
@@ -123,14 +140,17 @@ class PassGen(object):
             pass_file = self.work_dir / 'pass_%d.pdf' % i
             self._svg2pdf('pass.svg', pass_file,
                           pi=i, pc=check(i))
+            self._add_step()
             merger.append(pass_file)
 
         _passes_file = str(self.work_dir / '_passes.pdf')
         merger.write(_passes_file)
+        self._add_step()
 
         if app.config['PASS_NUP'] > 1:
             nup_file = str(self.work_dir / '_passes_nup.pdf')
             generateNup(_passes_file, app.config['PASS_NUP'], nup_file)
+            self._add_step()
             return nup_file
         return _passes_file
 
@@ -143,15 +163,18 @@ class PassGen(object):
             agreement_file = self.work_dir / 'agreement_%d.pdf' % i
             self._svg2pdf('agreement.svg', agreement_file,
                           pi=i, pc=check(i))
+            self._add_step()
             merger.append(agreement_file)
 
         _agreements_file = str(self.work_dir / '_agreements.pdf')
         merger.write(_agreements_file)
+        self._add_step()
 
         if app.config['AGREEMENT_NUP'] > 1:
             nup_file = str(self.work_dir / '_agreements_nup.pdf')
             generateNup(_agreements_file, app.config['AGREEMENT_NUP'],
                         nup_file)
+            self._add_step()
             return nup_file
         return _agreements_file
 

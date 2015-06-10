@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="row">
+    <div class="jumbotron col-xs-12">
+        <h1>Anmeldung zur Kinderstadt Dessopolis</h1>
+        <p>Liebe Erziehungsberechtigte, um die Persönlichkeitsrechte Ihrer
+        Kinder an Foto- und Filmmaterial zu wahren und um die Warteschlangen am
+        Eingang zur Kinderstadt zu verkürzen, bitten wir Sie, Ihre Kinder im
+        Vorfeld der Kinderstadt anzumelden. Nicht angemeldete Kinder müssen
+        entweder noch einmal nach Hause, um die Unterschrift der
+        Erziehungsberechtigen einzuholen, oder ein vom Veranstalter zur
+        Verfügung gestelltes T-Shirt tragen. Nur so können wir gewährleisten,
+        dass kein Bildmaterial mit Kindern veröffentlicht wird, deren
+        Erziehungsberechtigte dem nicht zugestimmt haben. Wir danken für Ihr
+        Verständnis und wünschen Ihren Kindern eine wunderbare Zeit in
+        Dessopolis!</p>
+        <p><em>punkt e.V.</em></p>
+        <a class="btn btn-primary btn-lg" href="{{ url_for('order_create') }}">Los gehts!</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+{% endblock %}

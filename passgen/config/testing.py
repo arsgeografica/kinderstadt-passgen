@@ -1,5 +1,5 @@
 import tempfile
-from kinderstadt_passgen.config.development import *
+from passgen.config.development import *
 
 CELERY_ALWAYS_EAGER = True
 

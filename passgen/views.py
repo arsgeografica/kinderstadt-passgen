@@ -1,10 +1,11 @@
+from datetime import datetime, timedelta
 import logging
-from flask import abort, current_app as app, render_template, \
-    redirect, request, send_file, url_for
-from kinderstadt_passgen.extensions import db
-from kinderstadt_passgen.models import Order, OrderSchema
-from kinderstadt_passgen.tasks import execute_order
-from kinderstadt_passgen.forms import OrderForm
+from flask import abort, current_app as app, render_template, redirect, \
+    request, send_file, url_for
+from passgen.extensions import db
+from passgen.models import Order, OrderSchema
+from passgen.tasks import execute_order
+from passgen.forms import OrderForm
 
 
 def request_wants_json():
@@ -40,7 +41,7 @@ def order(base62_id=None):
 
                     return redirect(
                         url_for('order', base62_id=order.base62_id))
-                except Exception, e:
+                except Exception as e:
                     db.session.delete(order)
                     db.session.commit()
                     raise e
@@ -50,6 +51,13 @@ def order(base62_id=None):
     else:
         order = Order.get_by_base62_id(base62_id)
         if request_wants_json():
+            since_when = datetime.now() - \
+                timedelta(hours=app.config['CLEANUP_WAIT_HOURS'])
+            pending = Order.query.filter(
+                Order.finished == None,
+                Order.id != order.id,
+                Order.ordered >= since_when).count()
+            order._pending = pending
             schema = OrderSchema()
             return schema.jsonify(order)
         else:

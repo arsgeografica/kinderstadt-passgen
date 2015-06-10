@@ -9,7 +9,7 @@ _BASE_DIR = Path(__file__).abspath().dirname().dirname()
 SECRET_KEY = '5m34a58x(3^$np08v!si#!a1btp$(h$a0qa-j_c)^!-ah=ypqs'
 
 # Database settings
-SQLALCHEMY_DATABASE_URI = 'postgresql://kinderstadt@localhost/kinderstadt_passgen'
+SQLALCHEMY_DATABASE_URI = 'postgresql://kinderstadt@localhost/passgen'
 
 # Celery settings
 CELERY_BROKER_URL = 'amqp://kinderstadt:kinderstadt@localhost/passgen'
@@ -26,7 +26,7 @@ CELERY_QUEUES = (
 )
 
 CELERY_ROUTES = ({
-    'kinderstadt_passgen.tasks.execute_order': {
+    'passgen.tasks.execute_order': {
         'queue': 'passgen',
         'routing_key': 'kinderstadt.passgen'
     }
@@ -36,6 +36,7 @@ CELERY_ROUTES = ({
 ID_ENCODE_OFFSET = 10000
 RANGE_SIZE_MAX = 50
 FILE_STORAGE_PATH = _BASE_DIR / '../media'
+CLEANUP_WAIT_HOURS = 1
 
 LOG_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 LOG_LEVEL = logging.INFO

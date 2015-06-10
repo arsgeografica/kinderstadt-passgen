@@ -8,7 +8,9 @@
 </head>
 <body class="container {%- if body_class %} {{ body_class }}{% endif %}">
     <div class="logo">
-        <img src="{{ url_for('static', filename='assets/logo_dessopolis.svg') }}">
+        <a href="{{ url_for('home') }}">
+            <img src="{{ url_for('static', filename='assets/logo_dessopolis.svg') }}">
+        </a>
     </div>
     {% block body %}{% endblock %}
     <div class="passgen-version">passgen {{ __version__ }}</div>
