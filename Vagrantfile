@@ -23,7 +23,8 @@ Vagrant.configure(2) do |config|
         ansible.sudo = true
         ansible.extra_vars = {
             'core_hostname' => 'passgen',
-            'postgis_is_dev' => true,
+            'postgresql_pg_hba_trust_hosts' => ['all'],
+            'postgresql_listen_addresses' => ['*'],
         }
     end
 end
