@@ -22,6 +22,7 @@ class Order(db.Model):
     range_size = Column(Integer, nullable=True)
     ordered = Column(DateTime(timezone=False), nullable=False)
     finished = Column(DateTime(timezone=False), nullable=True)
+    progress = Column(Integer, default=0, nullable=False)
 
     @classmethod
     def create(cls, size=1):
