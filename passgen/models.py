@@ -22,6 +22,7 @@ class Order(db.Model):
     range_size = Column(Integer, nullable=True)
     ordered = Column(DateTime(timezone=False), nullable=False)
     finished = Column(DateTime(timezone=False), nullable=True)
+    progress = Column(Integer, default=0, nullable=False)
 
     @classmethod
     def create(cls, size=1):
@@ -65,7 +66,9 @@ class OrderSchema(ma.Schema):
 
     class Meta:
         # Fields to expose
-        fields = ('base62_id', 'range_size', 'ordered', 'finished', '_links')
+        fields = ('base62_id', 'range_size', 'ordered', 'finished', 'progress',
+                  '_links', '_pending')
+
     # Smart hyperlinking
     _links = ma.Hyperlinks({
         'self': ma.URLFor('order', base62_id='<base62_id>')

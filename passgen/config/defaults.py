@@ -36,6 +36,7 @@ CELERY_ROUTES = ({
 ID_ENCODE_OFFSET = 10000
 RANGE_SIZE_MAX = 50
 FILE_STORAGE_PATH = _BASE_DIR / '../media'
+CLEANUP_WAIT_HOURS = 1
 
 LOG_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 LOG_LEVEL = logging.INFO
