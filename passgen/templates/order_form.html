@@ -3,8 +3,14 @@
 {% block body %}
 <div class="row">
     <div class="jumbotron">
-        <h1>Passgenerator Dessopolis</h1>
-        <p>Wenn Sie mehr als {{ max_range_size}} Pässe benötigen, erstellen Sie erst eine PDF-Datei und danach eine weitere.</p>
+        <h1>Pass-Generator Dessopolis</h1>
+        <p>Mit dieser Anwendung können Sie Anmeldeformulare und gleichzeitig
+        Pässe für Dessopolis in einer PDF-Datei erstellen. Diese Datei enthält
+        auch eine Anleitung zum Ausfüllen der Anmeldeformulare und Pässe. Sie
+        können bis zu {{ max_range_size}} Pässe auf einmal erzeugen lassen.
+        Sollten Sie mehr benötigen, erstellen Sie einfach eine zweite
+        PDF-Datei.</p>
+        <hr>
         <form method="POST" action="{{ url_for('order_create') }}" class="row">
             {{ form.csrf_token }}
             <div class="range_size col-xs-12">

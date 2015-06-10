@@ -20,7 +20,7 @@ var query = throttle(function() {
             .text(order.progress + '%');
 
         // Show pending or not?
-        if(order._pending) {
+        if(order._pending && 0 === order.progress) {
             body.addClass('has_pending');
             pending.text(order._pending);
         } else {

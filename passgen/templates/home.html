@@ -3,16 +3,19 @@
 {% block body %}
 <div class="row">
     <div class="jumbotron col-xs-12">
-        <h1>Passgenerator Dessopolis</h1>
-        <p>Mit dieser Anwendung können Sie bereits im Voraus Anmeldeformulare für
-        Dessopolis erstellen. Die erstellte PDF beinhaltet bereits die Pässe für
-        Dessopolis.</p>
-        <p>Die erstellte PDF enthält eine Anleitung, wie sie die Pässe und
-        Anmeldeformulare ausfüllen sollten, um ohne groß warten zu müssen
-        in Dessopolis Eintritt zu erhalten.</p>
-        <p>Sie können bis zu {{ max_range_size }} Pässe auf einmal
-        erzeugen lassen. Sollten Sie mehr benötigen, erstellen sie einfach eine
-        zweite PDF.</p>
+        <h1>Anmeldung zur Kinderstadt Dessopolis</h1>
+        <p>Liebe Erziehungsberechtigte, um die Persönlichkeitsrechte Ihrer
+        Kinder an Foto- und Filmmaterial zu wahren und um die Warteschlangen am
+        Eingang zur Kinderstadt zu verkürzen, bitten wir Sie, Ihre Kinder im
+        Vorfeld der Kinderstadt anzumelden. Nicht angemeldete Kinder müssen
+        entweder noch einmal nach Hause, um die Unterschrift der
+        Erziehungsberechtigen einzuholen, oder ein vom Veranstalter zur
+        Verfügung gestelltes T-Shirt tragen. Nur so können wir gewährleisten,
+        dass kein Bildmaterial mit Kindern veröffentlicht wird, deren
+        Erziehungsberechtigte dem nicht zugestimmt haben. Wir danken für Ihr
+        Verständnis und wünschen Ihren Kindern eine wunderbare Zeit in
+        Dessopolis!</p>
+        <p><em>punkt e.V.</em></p>
         <a class="btn btn-primary btn-lg" href="{{ url_for('order_create') }}">Los gehts!</a>
     </div>
 </div>
