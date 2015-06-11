@@ -20,6 +20,7 @@ passgen/static.in/node_modules:
 .PHONY: dist
 dist: passgen/static.in/node_modules
 	cd passgen/static.in; gulp build
+	rm -rf dist
 	./setup.py sdist
 
 	mkdir -p provision/files

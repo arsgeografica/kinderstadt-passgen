@@ -15,7 +15,7 @@
             {{ form.csrf_token }}
             <div class="range_size col-xs-12">
                 <label for="range_size">
-                Ich würde gerne {{ form.range_size(size=5) }} Anmeldungen erstellen.</label>
+                Ich würde gerne {{ form.range_size() }} Anmeldungen erstellen.</label>
                 {% if form.range_size.errors %}
                 <div class="alert alert-danger">
                 {# @TODO This is an ugly hack around the accumulating errors #}
