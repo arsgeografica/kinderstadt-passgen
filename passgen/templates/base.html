@@ -15,5 +15,6 @@
     {% block body %}{% endblock %}
     <div class="passgen-version">passgen {{ __version__ }}</div>
     {% block script %}{% endblock %}
+    {%- if PIWIK_HOST and PIWIK_ID %}{% include 'piwik.html' %}{% endif -%}
 </body>
 </html>
