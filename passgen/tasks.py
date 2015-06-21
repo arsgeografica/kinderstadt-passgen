@@ -1,5 +1,6 @@
 from datetime import datetime
 import errno
+import math
 import os
 import os.path
 import shutil
@@ -93,9 +94,12 @@ class PassGen(object):
             self.work_dir = Path(tempfile.mkdtemp(suffix='passgen'))
 
         pass_nup = app.config['PASS_NUP']
-        pass_steps = self.order.range_size + (2 if pass_nup > 1 else + 1)
-        agreement_nup = app.config['AGREEMENT_NUP']
-        agreement_steps = self.order.range_size + (2 if agreement_nup > 1 else + 1)
+        pass_steps = self.order.range_size
+        if self.order.single_page:
+            pass_steps += self.order.range_size
+        else:
+            pass_steps += math.ceil(1.0 * self.order.range_size / pass_nup) + 1
+        agreement_steps = self.order.range_size
         self._num_steps = 1 + pass_steps + agreement_steps
         self._done_steps = 0
 
@@ -114,9 +118,24 @@ class PassGen(object):
         agreements = self._create_agreements()
 
         merger = PdfFileMerger()
+        logger.debug('Append %s', str(app.config['COVER_PDF']))
         merger.append(str(app.config['COVER_PDF']))
-        merger.append(passes)
-        merger.append(agreements)
+
+        nup = app.config['PASS_NUP']
+        if self.order.single_page or nup == 1:
+            for i in range(0, len(passes)):
+                logger.debug('Append %s', passes[i])
+                merger.append(passes[i])
+                logger.debug('Append %s', agreements[i])
+                merger.append(agreements[i])
+        else:
+            for i in range(0, len(passes)):
+                logger.debug('Append %s', passes[i])
+                merger.append(passes[i])
+                for f in agreements[i*nup:(i+1)*nup]:
+                    logger.debug('Append %s', f)
+                    merger.append(f)
+
         result_file = str(self.work_dir / 'passes.pdf')
         merger.write(result_file)
         self._add_step()
@@ -133,50 +152,69 @@ class PassGen(object):
         db.session.commit()
 
     def _create_passes(self):
-        """Create passes PDF file"""
-        merger = PdfFileMerger()
+        """Create passes PDF file
+
+        n steps for each pass
+        if single_page:
+            n steps for each pass
+        else:
+            ceil(n/nup) for each page of passes if nup > 1
+        """
+        files = []
         for i in range(self.order.range_from, self.order.range_from +
                        self.order.range_size):
             pass_file = self.work_dir / 'pass_%d.pdf' % i
             self._svg2pdf('pass.svg', pass_file,
                           pi=i, pc=check(i))
             self._add_step()
-            merger.append(pass_file)
+            files.append(pass_file)
 
-        _passes_file = str(self.work_dir / '_passes.pdf')
-        merger.write(_passes_file)
-        self._add_step()
+        if self.order.single_page:
+            _files = []
+            for f in [Path(f) for f in files]:
+                file_name = self.work_dir / '%s_sp.pdf' % f.namebase
+                logger.debug('Nupping %s into %s', f, file_name)
+                generateNup(str(f), app.config['PASS_NUP'], str(file_name))
+                self._add_step()
+                _files.append(file_name)
+            return _files
+        else:
+            if app.config['PASS_NUP'] == 1:
+                return files
 
-        if app.config['PASS_NUP'] > 1:
-            nup_file = str(self.work_dir / '_passes_nup.pdf')
-            generateNup(_passes_file, app.config['PASS_NUP'], nup_file)
-            self._add_step()
-            return nup_file
-        return _passes_file
+            _files = []
+            nup = app.config['PASS_NUP']
+            for i in range(0, len(files), nup):
+                merger = PdfFileMerger()
+                for j in range(0, nup):
+                    if i+j >= len(files):
+                        break
+                    merger.append(files[i+j])
+                nup_in_file = str(self.work_dir / 'pass_nup_%d-%d_in.pdf' % (i, i+j))
+                nup_out_file = str(self.work_dir / 'pass_nup_%d-%d.pdf' % (i, i+j))
+                merger.write(nup_in_file)
+                self._add_step()
+                generateNup(nup_in_file, app.config['PASS_NUP'], nup_out_file)
+                self._add_step()
+                _files.append(nup_out_file)
+            return _files
 
     def _create_agreements(self):
-        """Create agreement forms PDF file"""
+        """Create agreement forms PDF file
 
-        merger = PdfFileMerger()
+        n steps for each pass
+        """
+
+        files = []
         for i in range(self.order.range_from, self.order.range_from +
                        self.order.range_size):
-            agreement_file = self.work_dir / 'agreement_%d.pdf' % i
+            agreement_file = self.work_dir / 'agreement_%d.pdf' % (i - self.order.range_from)
             self._svg2pdf('agreement.svg', agreement_file,
                           pi=i, pc=check(i))
             self._add_step()
-            merger.append(agreement_file)
+            files.append(agreement_file)
 
-        _agreements_file = str(self.work_dir / '_agreements.pdf')
-        merger.write(_agreements_file)
-        self._add_step()
-
-        if app.config['AGREEMENT_NUP'] > 1:
-            nup_file = str(self.work_dir / '_agreements_nup.pdf')
-            generateNup(_agreements_file, app.config['AGREEMENT_NUP'],
-                        nup_file)
-            self._add_step()
-            return nup_file
-        return _agreements_file
+        return files
 
     def _svg2pdf(self, template, out_file, **kwargs):
         """Render SVG template to outfile using Jinja2, passing kwargs"""
