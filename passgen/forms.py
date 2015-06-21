@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 from flask import current_app as app
 from flask.ext.wtf import Form
-from wtforms import IntegerField
+from wtforms import BooleanField, IntegerField
 from wtforms.validators import DataRequired, NumberRange
 
 
 class OrderForm(Form):
     range_size = IntegerField(validators=[DataRequired()])
+    single_page = BooleanField()
 
     def __init__(self, *args, **kwargs):
         max_val = app.config['RANGE_SIZE_MAX']

@@ -49,4 +49,3 @@ LOG_FILE_LOG_LEVEL = LOG_LEVEL
 # PDF settings
 COVER_PDF = _BASE_DIR / 'templates/cover.pdf'
 PASS_NUP = 4
-AGREEMENT_NUP = 1

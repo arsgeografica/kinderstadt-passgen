@@ -32,7 +32,8 @@ def order(base62_id=None):
         if 'POST' == request.method:
             if form.validate_on_submit():
                 logger = logging.getLogger(__name__)
-                order = Order.create(size=form.range_size.data)
+                order = Order.create(size=form.range_size.data,
+                                     single_page=form.single_page.data)
                 logger.info('Created order %d for %d passes',
                             order.id, order.range_size)
                 try:

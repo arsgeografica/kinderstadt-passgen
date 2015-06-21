@@ -1,7 +1,7 @@
 import basehash
 from flask import current_app as app
 from path import Path
-from sqlalchemy.types import DateTime, Integer
+from sqlalchemy.types import Boolean, DateTime, Integer
 from sqlalchemy.schema import Column
 from datetime import datetime
 from passgen.extensions import db, ma
@@ -23,9 +23,10 @@ class Order(db.Model):
     ordered = Column(DateTime(timezone=False), nullable=False)
     finished = Column(DateTime(timezone=False), nullable=True)
     progress = Column(Integer, default=0, nullable=False)
+    single_page = Column(Boolean, default=False, nullable=False)
 
     @classmethod
-    def create(cls, size=1):
+    def create(cls, size=1, single_page=False):
         """Create a new order, put it into the database and return the id"""
 
         # Get range start from last ordered or just assume 1
@@ -37,6 +38,7 @@ class Order(db.Model):
         order = cls()
         order.range_from = range_from
         order.range_size = size
+        order.single_page = single_page
         order.ordered = datetime.now()
 
         db.session.add(order)
