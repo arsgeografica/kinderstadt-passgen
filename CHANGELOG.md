@@ -4,7 +4,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 ### Added
+### Changed
+### Fixed
+
+## [1.2.0] - 2015-06-21
+### Added
 - Added option to have single pass per page instead of n-up'ing them.
+- CHANGELOG.md :)
+
 ### Changed
 ### Fixed
 
